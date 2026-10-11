@@ -49,6 +49,7 @@ public abstract class Device {
         return id;
     }
     public int getYear(){ return serviceYear;}
+    public String getName() {return name;}
 
     public abstract BigDecimal chiphiBaotri();
     @Override

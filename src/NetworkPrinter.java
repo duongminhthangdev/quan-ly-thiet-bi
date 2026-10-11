@@ -3,12 +3,20 @@ import java.math.BigDecimal;
 public class NetworkPrinter extends Printer implements INetworkable {
     private String ipAddress;
 
-    // Khớp chính xác kiểu dữ liệu và thứ tự với constructor của lớp Printer
+    // Cập nhật constructor nhận String ipAddress làm tham số cuối
     public NetworkPrinter(String id, String name, BigDecimal price, int year,
-                          Type type, int trang, boolean mau) {
-        // Truyền đủ 8 tham số: id, name, price, year, type, trang, true (network), mau
+                          Type type, int trang, String ipAddress) {
+        // Truyền đủ 8 tham số cho lớp cha Printer:
+        // (id, name, price, year, type, trang, network = true, mau = false mặc định)
+        super(id, name, price, year, type, trang, true, false);
+        this.ipAddress = ipAddress;
+    }
+
+    // Nếu bạn muốn hỗ trợ cả thuộc tính 'mau' (màu sắc), có thể dùng constructor này:
+    public NetworkPrinter(String id, String name, BigDecimal price, int year,
+                          Type type, int trang, boolean mau, String ipAddress) {
         super(id, name, price, year, type, trang, true, mau);
-        this.ipAddress = "";
+        this.ipAddress = ipAddress;
     }
 
     @Override
@@ -26,9 +34,6 @@ public class NetworkPrinter extends Printer implements INetworkable {
         if (ipAddress == null || ipAddress.trim().isEmpty()) {
             throw new IllegalArgumentException("Địa chỉ IP không được rỗng.");
         }
-        if (isConnected()) {
-            throw new IllegalStateException("Thiết bị đang kết nối.");
-        }
         this.ipAddress = ipAddress;
     }
 
@@ -36,9 +41,4 @@ public class NetworkPrinter extends Printer implements INetworkable {
     public void disconnect() {
         this.ipAddress = "";
     }
-
-//    @Override
-//    public boolean checkConnection() {
-//        return isConnected();
-//    }
 }
